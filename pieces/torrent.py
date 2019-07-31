@@ -89,8 +89,8 @@ class Torrent:
 
         :return: The total size (in bytes) for this torrent's data.
         """
-        if self.multi_file:
-            raise RuntimeError('Multi-file torrents is not supported!')
+        #if self.multi_file:
+         #   raise RuntimeError('Multi-file torrents is not supported!')
         return self.files[0].length
 
     @property
