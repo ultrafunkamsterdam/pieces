@@ -113,7 +113,7 @@ class Tracker:
     def __init__(self, torrent):
         self.torrent = torrent
         self.peer_id = _calculate_peer_id()
-        self.http_client = aiohttp.ClientSession()
+        self.http_client = None
 
     async def connect(self,
                       first: bool=None,
@@ -140,7 +140,8 @@ class Tracker:
             'compact': 1}
         if first:
             params['event'] = 'started'
-
+        if not getattr(self, 'http_client'):
+            self.http_client = aiohttp.ClientSession()
         url = self.torrent.announce + '?' + urlencode(params)
         logging.info('Connecting to tracker at: ' + url)
 
