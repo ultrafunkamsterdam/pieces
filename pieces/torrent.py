@@ -48,7 +48,10 @@ class Torrent:
         """
         if self.multi_file:
             # TODO Add support for multi-file torrents
-            raise RuntimeError('Multi-file torrents is not supported!')
+            files = self.meta_info[b'info'][b'files']
+            biggest_file = max(files, key=lambda file: file[b'length'])
+            self.files.append(TorrentFile(biggest_file[b'name'].decode(), biggest_file[b'length']))
+            #raise RuntimeError('Multi-file torrents is not supported!')
         self.files.append(
             TorrentFile(
                 self.meta_info[b'info'][b'name'].decode('utf-8'),
